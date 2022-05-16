@@ -42,10 +42,8 @@ namespace Lesson2
          }
         */
 
-        /// <summary>
-        /// Задание 1. Запросить у пользователя минимальную и максимальную температуру за сутки и вывести среднесуточную температуру
-        /// </summary>
-        static void Task1()
+        //Задание 1. 
+        /*static void Task1()
         {
 
             Console.Write("Введите минимальную температуру сегодня: ");
@@ -57,11 +55,11 @@ namespace Lesson2
             float average = (min + max) / 2; //формула вычисления средней темп
 
             Console.WriteLine($"Среднесуточная температура: {average}");
-        }
+        }*/
 
 
         /// <summary>
-        /// Задание 1, 2, 5. Пока не понятно, как вытаскивать данные, нужно учить Поля и get\set
+        /// Задание 1, 2, 5. Пока не понятно, как вытаскивать данные, нужно изучить Поля и get\set
         /// </summary>
         static void Task125()
         {
@@ -147,10 +145,10 @@ namespace Lesson2
         }
 
         /// <summary>
-        /// Задание 5. Метод проверки.Проверка на дождливу погоду
+        /// Задание 5. Метод проверки. Проверка на дождливу погоду.
         /// </summary>
         /// <param name="average">Средняя температура за день</param>
-        /// <param name="monthNum">Номер текущего месяца</param>
+        /// <param name="monthNum">Номер месяца</param>
         /// <returns></returns>
         static string RainyWeather(float average, int monthNum)
         {
@@ -275,8 +273,7 @@ namespace Lesson2
                     break;
 
             }
-
-            //Task1();
+            
             Console.ReadKey();
         }
     }
