@@ -190,22 +190,55 @@ namespace Lesson2
         static void Task4()
         {
             DateTime Date = new DateTime(2022, 04, 22, 19, 11, 26);
+            
             string item1 = "Number 9 large";
             string item2 = "Number 6 with extra dip";
             string item3 = "Number 45";
             string item4 = "Large soda";
+            
             float price1 = 150.25F;
             float price2 = 102F;
             float price3 = 73.30F;
             float price4 = 54.75F;
+            
             short amount1 = 1;
             short amount2 = 1;
             short amount3 = 2;
             short amount4 = 4;
 
-            Console.WriteLine("----------------------------------------------------");
-            Console.WriteLine("CLUCKIN' BELL");
-            Console.WriteLine("Кассовый чек");
+            float sum01 = price1 * amount1;
+            float sum02 = price2 * amount2;
+            float sum03 = price3 * amount3;
+            float sum04 = price4 * amount4;
+            
+            float total = sum01 + sum02 + sum03 + sum04;
+
+            Console.WriteLine(" __________________________________________________________________");
+            Console.WriteLine("|                                                                  |");
+            Console.WriteLine("|                          CLUCKIN' BELL                           |");
+            Console.WriteLine("|                                                                  |");
+            Console.WriteLine("|                           Кассовый чек                           |");
+            Console.WriteLine("|                                                                  |");
+            Console.WriteLine($"|                     Дата {Date}                     |");
+            Console.WriteLine("|                                                                  |");
+            Console.WriteLine("|                                                                  |");
+            Console.WriteLine("|  Наименование                 Цена         Кол-во         Итого  |");
+            Console.WriteLine("|..................................................................|");
+            Console.WriteLine("|                                                                  |");
+            Console.WriteLine($"|- {item1}               {price1}          {amount1}           {sum01} |");
+            Console.WriteLine($"|- {item2}      {price2}             {amount2}           {sum02}    |");
+            Console.WriteLine($"|- {item3}                    {price3}            {amount3}           {sum03}  |");
+            Console.WriteLine($"|- {item4}                   {price4}           {amount4}           {sum04}    |");
+            Console.WriteLine("|..................................................................|");
+            Console.WriteLine("|                                                                  |");
+            Console.WriteLine($"|      Итог: {total}       Принято:650       Сдача 32,15            |");
+            Console.WriteLine("|                                                                  |");
+            Console.WriteLine("|  Кассир: CJ                                                      |");
+            Console.WriteLine("|                       ПРИЯТНОГО АППЕТИТА!                        |");
+            Console.WriteLine("|__________________________________________________________________|");
+
+
+
 
         }
 
@@ -216,7 +249,7 @@ namespace Lesson2
             Console.WriteLine("Меню: ");
             Console.WriteLine("1. Задания 1, 2, 5");
             Console.WriteLine("2. Задание 3");
-            //Console.WriteLine("3. Задание 4");
+            Console.WriteLine("3. Задание 4");
             Console.WriteLine("4. Выход из приложения");
             Console.WriteLine("----------------------------------------------------");
             Console.Write("Выберите пункт меню для запуска задания: ");
@@ -236,10 +269,10 @@ namespace Lesson2
                     Console.WriteLine("----------------------------------------------------");
                     Task3();
                     break;
-                //case 3:
-                //    Console.WriteLine("----------------------------------------------------");
-                //    Task4();
-                //    break;
+                case 3:
+                    Console.WriteLine("----------------------------------------------------");
+                    Task4();
+                    break;
 
             }
 
