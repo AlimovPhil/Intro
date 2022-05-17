@@ -59,7 +59,7 @@ namespace Lesson2
 
 
         /// <summary>
-        /// Задание 1, 2, 5. Пока не понятно, как вытаскивать данные, нужно изучить Поля и get\set
+        /// Задание 1, 2, 5. Пока не понятно, как вытаскивать данные, нужно изучить "Поля и get\set"
         /// </summary>
         static void Task125()
         {
@@ -188,17 +188,17 @@ namespace Lesson2
         static void Task4()
         {
             DateTime Date = new DateTime(2022, 04, 22, 19, 11, 26);
-            
+
             string item1 = "Number 9 large";
             string item2 = "Number 6 with extra dip";
             string item3 = "Number 45";
             string item4 = "Large soda";
-            
+
             float price1 = 150.25F;
             float price2 = 102F;
             float price3 = 73.30F;
             float price4 = 54.75F;
-            
+
             short amount1 = 1;
             short amount2 = 1;
             short amount3 = 2;
@@ -208,7 +208,7 @@ namespace Lesson2
             float sum02 = price2 * amount2;
             float sum03 = price3 * amount3;
             float sum04 = price4 * amount4;
-            
+
             float total = sum01 + sum02 + sum03 + sum04;
 
             Console.WriteLine(" __________________________________________________________________");
@@ -240,6 +240,45 @@ namespace Lesson2
 
         }
 
+
+        /// <summary>
+        /// Задание 6. Создание универсальной структуры расписания недели. Описание работы двух офисов.
+        /// </summary>
+
+        [Flags]
+        public enum DayOfWeek
+        {
+            //Список дней недели
+            Monday = 0b_0000001,
+            Tuesday = 0b_0000010,
+            Wednesday = 0b_0000100,
+            Thursday = 0b_0001000,
+            Friday = 0b_0010000,
+            Saturday = 0b_0100000,
+            Sunday = 0b_1000000,
+        }
+
+
+        static void Task6()
+        {
+
+            DayOfWeek office1 = (DayOfWeek)0b_0011110;
+            DayOfWeek office2 = (DayOfWeek)0b_1111111;
+            Console.WriteLine("Выберите офис чтобы посмотреть дни его работы:");
+            Console.WriteLine("1. Офис 1");
+            Console.WriteLine("2. Офис 2");
+            int choice = int.Parse(Console.ReadLine());
+            switch (choice)
+            {
+                case 1:
+                    Console.WriteLine($"Режим работы офиса 1: {office1}");
+                    break;
+                case 2:
+                    Console.WriteLine($"Режим работы офиса 2: {office2}");
+                    break;
+            }
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Здравствуйте, Станислав!");
@@ -248,14 +287,15 @@ namespace Lesson2
             Console.WriteLine("1. Задания 1, 2, 5");
             Console.WriteLine("2. Задание 3");
             Console.WriteLine("3. Задание 4");
-            Console.WriteLine("4. Выход из приложения");
+            Console.WriteLine("4. Задание 6");
+            Console.WriteLine("5. Выход из приложения");
             Console.WriteLine("----------------------------------------------------");
             Console.Write("Выберите пункт меню для запуска задания: ");
 
             int choice = int.Parse(Console.ReadLine());
             switch (choice)
             {
-                case 4:
+                case 5:
                     Console.WriteLine("----------------------------------------------------");
                     Console.WriteLine("...Завершение работы приложения...");
                     break;
@@ -270,6 +310,10 @@ namespace Lesson2
                 case 3:
                     Console.WriteLine("----------------------------------------------------");
                     Task4();
+                    break;
+                case 4:
+                    Console.WriteLine("----------------------------------------------------");
+                    Task6();
                     break;
 
             }
