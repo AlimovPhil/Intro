@@ -9,11 +9,6 @@ namespace Lesson4
     internal class Program
     {
 
-        /* 
-        
-        
-        4. (*) Написать программу, вычисляющую число Фибоначчи для заданного значения рекурсивным способом.*/
-
         /// <summary>
         /// 1. Написать метод GetFullName(string firstName, string lastName, string  patronymic), принимающий на вход ФИО в разных аргументах 
         /// и возвращающий объединённую строку с ФИО.Используя метод, написать программу, выводящую в консоль 3–4 разных ФИО.
@@ -44,19 +39,29 @@ namespace Lesson4
         /// </summary>
         static string[] separator = { ",", ".", " ", "?", "!", ";", ":" };
 
+        static int[] StringToNums(string input) //Метод преобразования строки в числа
+        {
+            string[] chars = input.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            int[] numbers = Array.ConvertAll(chars, int.Parse);
+            return numbers;
+        }
+
+        static int NumSum(int[] array) //Метод подсчета суммы чисел
+        {
+            int sum = 0;
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                sum += array[i];
+            }
+            return sum;
+        }
+
         static void Task2()
         {
             Console.Write("Введите набор чисел через пробел: ");
             string str = Console.ReadLine();
-            string[] chars = str.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-            int[] numbers = Array.ConvertAll(chars, int.Parse);
-
-            int sum = 0;
-
-            for (int i = 0; i < numbers.GetLength(0); i++)
-            {
-                sum += numbers[i];
-            }
+            int[] numbers = StringToNums(str);
+            int sum = NumSum(numbers);
             Console.WriteLine(sum);
         }
 
@@ -67,13 +72,89 @@ namespace Lesson4
         /// Используя эти методы, ввести с клавиатуры номер месяца и вывести название времени года.
         /// Если введено некорректное число, вывести в консоль текст «Ошибка: введите число от 1 до 12».
         /// </summary>
+
+        public enum YearSeason //Перечисление времен года
+        {
+            Error,
+            Winter,
+            Spring,
+            Summer,
+            Autumn
+        }
+
+        static YearSeason ByMonth(int a) //Определение времени года по введенным данным
+        {
+            if (a < 1 || a > 12)
+            {
+                Console.WriteLine("Ошибка!");
+                Console.WriteLine("Введите число от 1 до 12!");
+                return YearSeason.Error;
+            }
+            else
+            {
+                if ((a == 3) || (a == 4) || (a == 5))
+                {
+                    return YearSeason.Spring;
+                }
+                else
+                {
+                    if ((a == 6) || (a == 7) || (a == 8))
+                    {
+                        return YearSeason.Summer;
+                    }
+                    else
+                    {
+                        if ((a == 9) || (a == 10) || (a == 11))
+                        {
+                            return YearSeason.Autumn;
+                        }
+                        else
+                        {
+                            return YearSeason.Winter;
+                        }
+                    }
+                }
+            }
+        }
+
+        static string PrintSeason(YearSeason input) // Вывод в консоль названия времени года
+        {
+            switch (input)
+            {
+                case YearSeason.Spring:
+                    return "Весна";
+                case YearSeason.Winter:
+                    return "Зима";
+                case YearSeason.Autumn:
+                    return "Осень";
+                case YearSeason.Summer:
+                    return "Лето";
+                default: return "Ошибка!";
+            }
+        }
+
         static void Task3()
         {
-            
+            Console.Write("Введите номер текущего месяца: ");
+            if (int.TryParse(Console.ReadLine(), out int num))
+            Console.WriteLine($"Время года: {PrintSeason(ByMonth(num))}");
+            else
+            {
+                Console.WriteLine("Ошибка! \nВведите число!");
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 4. (*) Написать программу, вычисляющую число Фибоначчи для заданного значения рекурсивным способом.
+        /// </summary>
+        static void Task4()
+        {
+
         }
 
         static void Main(string[] args)
-        {                
+        {
             Console.Title = "Lesson 4";
             while (true)
             {
@@ -102,7 +183,7 @@ namespace Lesson4
                             break;
                         case 3:
                             Console.WriteLine("----------------------------------------------------");
-                            //Task3();
+                            Task3();
                             Console.ReadKey();
                             break;
                         case 4:
