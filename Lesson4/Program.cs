@@ -147,10 +147,27 @@ namespace Lesson4
 
         /// <summary>
         /// 4. (*) Написать программу, вычисляющую число Фибоначчи для заданного значения рекурсивным способом.
+        /// Fn = Fn-1 + Fn-2, n<2
         /// </summary>
+        static int F(int value)
+        {
+            Console.WriteLine(value);
+            if (value < 2) return value;
+            else return F(value - 1) + F(value - 2);
+        }
         static void Task4()
         {
-
+           Console.WriteLine("Введите число, что вычислить число Фибоначчи: ");
+            if (int.TryParse(Console.ReadLine(), out int a))
+            {
+                Console.WriteLine("Результат: ");
+                F(a);
+            }
+            else
+            {
+                Console.WriteLine("Ошибка, введите число!");
+                return;
+            }
         }
 
         static void Main(string[] args)
@@ -163,7 +180,8 @@ namespace Lesson4
                 Console.WriteLine("1. Задание с GetFullName");
                 Console.WriteLine("2. Сумма введенных чисел");
                 Console.WriteLine("3. Определение времени года");
-                Console.WriteLine("4. Выход из приложения");
+                Console.WriteLine("4. Число Фибонначи");
+                Console.WriteLine("5. Выход из приложения");
                 Console.WriteLine("----------------------------------------------------");
                 Console.Write("Выберите пункт меню для запуска задания: ");
 
@@ -187,6 +205,11 @@ namespace Lesson4
                             Console.ReadKey();
                             break;
                         case 4:
+                            Console.WriteLine("----------------------------------------------------");
+                            Task4();
+                            Console.ReadKey();
+                            break;
+                        case 5:
                             Console.WriteLine("----------------------------------------------------");
                             Console.WriteLine("Завершение работы приложения...");
                             Console.ReadKey();
