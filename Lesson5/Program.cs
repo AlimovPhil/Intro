@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
 
-/* 2. Написать программу, которая при старте дописывает текущее время в файл
-«startup.txt».
-3. Ввести с клавиатуры произвольный набор чисел (0...255) и записать их в бинарный
+/* 
+ 3. Ввести с клавиатуры произвольный набор чисел (0...255) и записать их в бинарный
 файл.
 4. (*) Сохранить дерево каталогов и файлов по заданному пути в текстовый файл — с
 рекурсией и без.
@@ -52,7 +51,42 @@ namespace Lesson5
             string fileText = File.ReadAllText(fileName); //Открывает файл и считывает весь текст в виде строки
             //File.ReadAllLines(fileName); - Открывает файл и считывает весь текст в виде НАБОРА СТРОК
             Console.WriteLine(fileText);
+        }
 
+        /// <summary>
+        ///  2. Написать программу, которая при старте дописывает текущее время в файл «startup.txt»
+        /// </summary>
+        static void Task2()
+        {
+            string fileName = "startup.txt";
+            DateTime time = DateTime.Now;
+            File.AppendAllText(fileName, time.ToLongTimeString());
+            File.AppendAllText(fileName, Environment.NewLine);
+            Console.WriteLine("\nЗапись текущего времени в файл startup.txt прошла успешно!\n");
+
+            Console.WriteLine("Вывести в консоль содержимое файла startup.txt?\n[1] - ДА\n[2] - НЕТ");
+            if (int.TryParse(Console.ReadLine(), out int choice))
+            {
+                switch (choice)
+                {
+                    case 1:
+                        string fileText = File.ReadAllText(fileName);
+                        Console.WriteLine(fileText);
+                        Console.WriteLine("Завершение программы...");
+                        break;
+                    case 2: 
+                        Console.WriteLine("Завершение программмы...");
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Вы ввели недопустимый символ!");
+                Console.WriteLine("Завершение программы...");
+                return;
+            }
+
+            //Console.WriteLine(time.ToLongTimeString());
         }
 
         static void Main(string[] args)
@@ -63,7 +97,7 @@ namespace Lesson5
                 Console.WriteLine("----------------------------------------------------");
                 Console.WriteLine("Список приложений: ");
                 Console.WriteLine("1. Ввод с клавиатуры и сохранение в файл");
-                Console.WriteLine("2. Сумма введенных чисел");
+                Console.WriteLine("2. Дописать в файл Startup.txt текущее время");
                 Console.WriteLine("3. Определение времени года");
                 Console.WriteLine("4. Число Фибонначи");
                 Console.WriteLine("5. Выход из приложения");
@@ -81,7 +115,7 @@ namespace Lesson5
                             break;
                         case 2:
                             Console.WriteLine("----------------------------------------------------");
-                            //Task2();
+                            Task2();
                             Console.ReadKey();
                             break;
                         case 3:
