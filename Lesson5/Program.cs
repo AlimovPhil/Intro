@@ -130,35 +130,41 @@ namespace Lesson5
             //}
             Console.WriteLine(".............................................");
 
+
+
             Console.WriteLine("Введите путь в файловой системе, для записи в текстовый файл:");
             //PrintDir01(new DirectoryInfo(Console.ReadLine()), "", true);
-            string path = "Task4.txt";
-            string str = PrintDir01(new DirectoryInfo(Console.ReadLine()), "", true);
-            File.WriteAllText(path, str);
+            //string path = "Task4.txt";
+            string str = SaveDir01(new DirectoryInfo(Console.ReadLine()), "", true);
+            //File.WriteAllText(path, str);
 
         }
            
-        static string PrintDir01(DirectoryInfo dir, string intend, bool lastDir)
+        static string SaveDir01(DirectoryInfo dir, string intend, bool lastDir)
         {
+            FileStream fileStream = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "Task4v2.txt", FileMode.Create, FileAccess.ReadWrite);
+            StreamWriter streamWriter = new StreamWriter(fileStream);
             string str = dir.Name + intend;
-            Console.Write(intend);
+            streamWriter.Write(intend);
             intend += lastDir ? " " : "│ ";
-            Console.Write(intend = "  ");
-            Console.Write(lastDir ? "└─" : "├─");
+            streamWriter.Write(intend = "  ");
+            streamWriter.Write(lastDir ? "└─" : "├─");
             
             FileInfo[] fileInDir = dir.GetFiles();
-            Console.WriteLine(dir.Name);
+            streamWriter.WriteLine(dir.Name);
 
             for (var i = 0; i < fileInDir.Length; i++)
             {
-                Console.WriteLine($"    │{intend}└─ {fileInDir[i].Name.ToString()}"); //тут схалтурил. Подскажите, что нужно было добавить в код, чтобы корректно все отрисовывалось
+                streamWriter.WriteLine($"    │{intend}└─ {fileInDir[i].Name.ToString()}"); //тут схалтурил. Подскажите, что нужно было добавить в код, чтобы корректно все отрисовывалось
             }
            
             DirectoryInfo[] subDirs = dir.GetDirectories();
             for (int i = 0; i < subDirs.Length; i++)
             {
-                str += $"  {PrintDir01(subDirs[i], intend, i == subDirs.Length - 1)}\n";
-            }           
+                streamWriter.WriteLine(SaveDir01(subDirs[i], intend, i == subDirs.Length - 1));
+            }                      
+            //streamWriter.Close();
+            //fileStream.Close();
             return str;
         }
 
