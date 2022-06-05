@@ -8,6 +8,11 @@ namespace Lesson8.TestLib
 {
     public class OutputHelpers
     {
+        /// <summary>
+        /// Выводит информацию по домашней работе.
+        /// </summary>
+        /// <param name="lesson"> Номер урока</param>
+        /// <param name="name"> ФИО студента</param>
         public static void HwHeader(int lesson, string name)
         {
             Console.WriteLine($"Домашняя работа. Урок {lesson}.\nВыполнил студент: {name}.");
