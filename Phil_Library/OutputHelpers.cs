@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lesson8.TestLib
 {
-    public class OutputHelpers
+    public static class OutputHelpers
     {
         /// <summary>
         /// Выводит информацию по домашней работе.

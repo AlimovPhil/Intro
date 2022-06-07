@@ -109,6 +109,7 @@ namespace Lesson5
         /// </summary>
         static void Task4()
         {
+            //ОПЕРАЦИИ С ДИРЕКТОРИЯМИ
             //DirectoryInfo directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
 
             //Console.WriteLine("Full Name: {0}", directoryInfo.FullName);
@@ -128,64 +129,49 @@ namespace Lesson5
             //{
             //    Console.WriteLine(fileInDir[i].Name);
             //}
-            Console.WriteLine(".............................................");
 
-
-
-            Console.WriteLine("Введите путь в файловой системе, для записи в текстовый файл:");
-            //PrintDir01(new DirectoryInfo(Console.ReadLine()), "", true);
-            //string path = "Task4.txt";
-            string str = SaveDir01(new DirectoryInfo(Console.ReadLine()), "", true);
-            //File.WriteAllText(path, str);
+            Console.Clear();
+            Console.WriteLine("Введите путь для сохранения.");
+            string input = Console.ReadLine();
+            PrintDir("dir.txt", new DirectoryInfo(input), "", true);
+            Console.WriteLine("Запись в файл прошла успешно!");
+            Console.ReadKey(true);
 
         }
-           
-        static string SaveDir01(DirectoryInfo dir, string intend, bool lastDir)
+
+        /// <summary>
+        /// Распечатать список папок и файлов рекурсивным способом
+        /// </summary>
+        /// <param name="dir">Директория</param>
+        /// <param name="indent">Отступ</param>
+        /// <param name="lastDirectory">Признак "последней" директории</param>
+        static void PrintDir(string fileName, DirectoryInfo dir, string indent, bool lastDirectory)
         {
-            FileStream fileStream = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "Task4v2.txt", FileMode.Create, FileAccess.ReadWrite);
-            StreamWriter streamWriter = new StreamWriter(fileStream);
-            string str = dir.Name + intend;
-            streamWriter.Write(intend);
-            intend += lastDir ? " " : "│ ";
-            streamWriter.Write(intend = "  ");
-            streamWriter.Write(lastDir ? "└─" : "├─");
-            
-            FileInfo[] fileInDir = dir.GetFiles();
-            streamWriter.WriteLine(dir.Name);
+            // Распечатываем отступ, далее переходим к печати ветви
+            File.AppendAllText(fileName, indent);
+            // В зависимости от признака lastDirectory, печатаем либо промежуточную ветвь, либо конечную
+            File.AppendAllText(fileName, lastDirectory ? "└─" : "├─");
+            indent += lastDirectory ? "  " : "│ ";
+            // Распечатываем само наименование директории
+            File.AppendAllText(fileName, $"{dir.Name}\n");
 
-            for (var i = 0; i < fileInDir.Length; i++)
-            {
-                streamWriter.WriteLine($"    │{intend}└─ {fileInDir[i].Name.ToString()}"); //тут схалтурил. Подскажите, что нужно было добавить в код, чтобы корректно все отрисовывалось
-            }
-           
-            DirectoryInfo[] subDirs = dir.GetDirectories();
-            for (int i = 0; i < subDirs.Length; i++)
-            {
-                streamWriter.WriteLine(SaveDir01(subDirs[i], intend, i == subDirs.Length - 1));
-            }                      
-            //streamWriter.Close();
-            //fileStream.Close();
-            return str;
+            // Получим все файлы текущей директории
+            FileInfo[] subFiles = dir.GetFiles();
+            // В цикле, пройдем по каждому файлу, распечатаем наименование файла как вложение к текущей директории
+            for (int i = 0; i < subFiles.Length; i++)
+                // Не забываем, и тут, файл тоже может оказаться последним в списке файлов
+                if (i == subFiles.Length - 1)
+                    File.AppendAllText(fileName, $"{indent}└─{subFiles[i].Name}\n");
+                else
+                    File.AppendAllText(fileName, $"{indent}├─{subFiles[i].Name}\n");
+
+            // Теперь получим список всех поддерикторий текущей директории
+            DirectoryInfo[] subDirects = dir.GetDirectories();
+            for (int i = 0; i < subDirects.Length; i++)
+                // И вот тут мы, рекурсивным способом, вызываем метод PrintDir
+                PrintDir(fileName, subDirects[i], indent, i == subDirects.Length - 1);
         }
-
-        //static void PrintDir(DirectoryInfo dir, string intend, bool lastDir)
-        //{
-        //    Console.Write(intend);
-        //    Console.Write(lastDir ? "└─" : "├─");
-        //    intend += lastDir ? " " : "│ ";
-        //    Console.WriteLine(dir.Name);
-        //    FileInfo[] fileInDir = dir.GetFiles();
-        //    for (var i = 0; i < fileInDir.Length; i++)
-        //    {
-        //        Console.WriteLine($".../{fileInDir[i].Name}");
-        //    }
-
-        //    DirectoryInfo[] subDirs = dir.GetDirectories(); 
-        //    for (int i = 0; i < subDirs.Length; i++)
-        //    {
-        //        PrintDir(subDirs[i], intend, i == subDirs.Length - 1);
-        //    }
-        //}
+        
 
         /// <summary>
         /// 5. (*) Список задач(ToDo-list):
@@ -197,25 +183,14 @@ namespace Lesson5
         /// ● при вводе пользователем порядкового номера задачи отметить задачу с этим порядковым номером как выполненную;
         /// ● записать актуальный массив задач в файл tasks.json/xml/bin.
         /// </summary>
+
+
+
         static void Task5()
         {
-
-            Console.WriteLine("Введите название задачу для добавления: ");
-            string title = Console.ReadLine();
-            ToDo NewTask = new ToDo (title, false);
-            NewTask.AddTaskToTable();
-
-            
-            ToDo task1 = new ToDo("Купить молоко", false);
-            Console.WriteLine(task1.ShowFullTask());
-            Console.WriteLine(task1.TaskDone(1));
-            Console.WriteLine(task1.ShowFullTask());    
-
-            ToDo task2 = new ToDo("Погладить кота", false);
-            Console.WriteLine(task2.ShowTask());
-            
-            ToDo task3 = new ToDo("Захватить мир", false);
-            Console.WriteLine(task3.ShowTask());
+            ToDo task1 = new ToDo();
+            task1.AddTaskToTable();
+            task1.ShowTask1();
 
         }
 

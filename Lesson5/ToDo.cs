@@ -18,10 +18,12 @@ namespace Lesson5
     public class ToDo
     {
         #region Fields
+        
         /// <summary>
         /// Название задачи
         /// </summary>
         public string Title { get; set; }
+        
         /// <summary>
         /// Признак выполнения задачи
         /// </summary>
@@ -29,37 +31,39 @@ namespace Lesson5
 
         #endregion
 
-        public List<string> Tasks = new List<string>();
-
         public ToDo() //конструктор
         {
 
         }
+
         /// <summary>
         /// Создает заметку с параметрами
         /// </summary>
         /// <param name="Title">Название задачи</param>
         /// <param name="IsDone">Признак выполнения</param>
-        public ToDo(string Title, bool IsDone)
+        public ToDo(string Title)
         {
             this.Title = Title;
-            this.IsDone = IsDone;
-        }
-        
-        public void AddTaskToTable()
-        {
-            Tasks.Add(Title);
-        }
-        
-        public string ShowTask()
-        {
-            return Title;
+
         }
 
-        public string ShowFullTask()
+
+        public List<string> Tasks = new List<string>();
+
+
+        public void AddTaskToTable()
         {
-            return Title + " " + IsDone.ToString();
+            ToDo Task = new ToDo();
+            Task.Title = Console.ReadLine();
+            Tasks.Add(Title);
         }
+
+        public void ShowTask1()
+        {
+            string output = Tasks[0];
+            Console.WriteLine(output);
+        }
+        
 
         public string TaskDone(int a)
         {
