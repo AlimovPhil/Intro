@@ -15,67 +15,20 @@ using System.Threading.Tasks;
 ● записать актуальный массив задач в файл tasks.json/xml/bin.*/
 namespace Lesson5
 {
-    public class ToDo
-    {
-        #region Fields
-        
         /// <summary>
-        /// Название задачи
+        /// Задача
         /// </summary>
-        public string Title { get; set; }
-        
-        /// <summary>
-        /// Признак выполнения задачи
-        /// </summary>
-        public bool IsDone { get; set; }
-
-        #endregion
-
-        public ToDo() //конструктор
+        [Serializable] // Атрибут Serializable требуется для корректной работы бинарной сериализации
+        public class ToDo
         {
+            /// <summary>
+            /// Наименование задачи
+            /// </summary>
+            public string Title { get; set; }
+            /// <summary>
+            /// Задача завершена?
+            /// </summary>
+            public bool IsDone { get; set; }
 
         }
-
-        /// <summary>
-        /// Создает заметку с параметрами
-        /// </summary>
-        /// <param name="Title">Название задачи</param>
-        /// <param name="IsDone">Признак выполнения</param>
-        public ToDo(string Title)
-        {
-            this.Title = Title;
-
-        }
-
-
-        public List<string> Tasks = new List<string>();
-
-
-        public void AddTaskToTable()
-        {
-            ToDo Task = new ToDo();
-            Task.Title = Console.ReadLine();
-            Tasks.Add(Title);
-        }
-
-        public void ShowTask1()
-        {
-            string output = Tasks[0];
-            Console.WriteLine(output);
-        }
-        
-
-        public string TaskDone(int a)
-        {
-            if (a == 1)
-            {
-                this.IsDone = true;
-                return "[x]" + Title;
-            }
-            else return Title;
-            
-        }
-        
-
-    }
 }
