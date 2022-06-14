@@ -162,11 +162,12 @@ namespace Lesson9
                             ShowFileInfo(commandParams[1]);
                         break;
 
+                    case "dir":               // вывод информации о папке
+                        if (commandParams.Length > 1 && commandParams.Length < 3)
+                            ShowDirInfo(commandParams[1]);
+                        break;
 
-                    // Вывод информации
-                    // file C:\source.txt
-
-                    case "help":
+                    case "help":               // вывод доступных команд
                         if (commandParams.Length == 1)
                             ShowHelp();
                         break;
@@ -174,6 +175,59 @@ namespace Lesson9
             }
             UpdateConsole();
         }
+
+        /// <summary>
+        /// Вывод информации о папке
+        /// </summary>
+        /// <param name="dirPath">Путь к папке</param>
+        static void ShowDirInfo(string dirPath)
+        {
+            DrawWindow(0, 26, WINDOW_WIDTH, 10);
+            if (Directory.Exists(dirPath))
+            {
+                try
+                {
+                    DirectoryInfo dirInfo = new DirectoryInfo(dirPath);
+                    string[] info = { $"Название папки: {dirInfo.Name.ToString()}",
+                            $"Расположение: {dirInfo.FullName.ToString()}",
+                            $"Создана: {dirInfo.CreationTime.ToString()}",
+                            $"Изменена: {dirInfo.LastWriteTime.ToString()}",
+                            };
+                    for (int i = 0; i < info.Length; i++)
+                    {
+                        Console.SetCursorPosition(1, 27 + i);
+                        Console.WriteLine(info[i]);
+                    }
+                    double folderSize = 0.0;                                                //Подсчет размера папки
+                    FileInfo[] files = dirInfo.GetFiles("*", SearchOption.AllDirectories);
+                    foreach (FileInfo file in files) folderSize += file.Length;
+
+                    (int currentLeft, int currentTop) = GetCursorPosition();                //Вывод в консоль размера папки
+                    Console.SetCursorPosition(currentLeft+1, currentTop);
+                    
+                    //Конвертация размера папки в КБ и МБ
+                    if (folderSize < 1024)
+                    Console.WriteLine($"Размер папки: {folderSize} byte");
+                    if (folderSize > 1023 && folderSize < 1048576)
+                    {
+                       double folderSizeKb = folderSize/1024;
+                       Console.WriteLine($"Размер папки: {Math.Round(folderSizeKb)} KB");
+                    }
+                    if (folderSize >= 1048576)
+                    {
+                        double folderSizeKb = folderSize / (1024*1024);
+                        Console.WriteLine($"Размер папки: {Math.Round(folderSizeKb)} MB");
+                    }
+                }
+
+                catch (IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+            }
+        }
+
 
         /// <summary>
         /// Вывод информации о файле
