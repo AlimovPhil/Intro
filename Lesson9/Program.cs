@@ -12,7 +12,7 @@ namespace Lesson9
     internal class Program
     {
         const int WINDOW_HEIGHT = 40; // Высота окна приложения;
-        const int WINDOW_WIDTH = 140; // Ширина окна приложения
+        const int WINDOW_WIDTH = 120; // Ширина окна приложения
         private static string currentDir = Directory.GetCurrentDirectory();
 
         //TODO.. Set const buffer zone
@@ -29,6 +29,8 @@ namespace Lesson9
 
             DrawWindow(0,0,WINDOW_WIDTH,26);
             DrawWindow(0, 26, WINDOW_WIDTH, 10);
+            DrawTree(new DirectoryInfo(currentDir), 1);
+            ShowDirInfo(currentDir);
             UpdateConsole();
 
             Console.ReadLine();
@@ -117,6 +119,7 @@ namespace Lesson9
                             {
                                 currentDir = commandParams[1];
                                 DrawTree(new DirectoryInfo(commandParams[1]), 1);
+                                ShowDirInfo(currentDir);
                                 UpdateConsole();
                             }
                         break;
@@ -210,7 +213,7 @@ namespace Lesson9
                     Console.WriteLine($"Размер папки: {folderSize} byte");
                     if (folderSize > 1023 && folderSize < 1048576)
                     {
-                       double folderSizeKb = folderSize/1024;
+                       double folderSizeKb = folderSize / 1024;
                        Console.WriteLine($"Размер папки: {Math.Round(folderSizeKb)} KB");
                     }
                     if (folderSize >= 1048576)
