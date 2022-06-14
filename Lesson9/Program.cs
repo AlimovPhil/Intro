@@ -111,7 +111,7 @@ namespace Lesson9
             {
                 switch (commandParams[0])
                 {
-                    case "cd":              //смена каталога и вывод дерева этого каталога
+                    case "cd":              // смена каталога и вывод дерева этого каталога
                         if (commandParams.Length > 1)
                             if (Directory.Exists(commandParams[1]))
                             {
@@ -121,7 +121,7 @@ namespace Lesson9
                             }
                         break;
 
-                    case "ls":              //вывод дерева введеного каталога с указанием начальной страницы отображения
+                    case "ls":              // вывод дерева введеного каталога с указанием начальной страницы отображения
                         if (commandParams.Length > 1 && Directory.Exists(commandParams[1]))
                             if (commandParams.Length > 3 && commandParams[2] == "-p" && int.TryParse(commandParams[3], out int n))
                             {
@@ -133,29 +133,39 @@ namespace Lesson9
                             }
                         break;
 
-                    case "cp":
+                    case "cp":              // копирование каталога
                         if (commandParams.Length > 1 && Directory.Exists(commandParams[1]))
                             if (commandParams.Length > 2) 
                             {
                                CopyDirectory(commandParams[1], commandParams[2]);
                             }
-
+                        break;
+                    case "cf":              // копирование файла
+                        if (commandParams.Length > 1)
+                            if (commandParams.Length > 2 && commandParams.Length < 4)
+                            {
+                                CopyFile(commandParams[1], commandParams[2]);
+                            }
+                        break;
+                    case "rf":              // удаление файла
+                        if (commandParams.Length > 1 && commandParams.Length < 3)
+                            RemoveFile(commandParams[1]);
                         break;
 
-                    // Копирование каталога
-                    // cp C:\Source D:\Target
-
-                    // Копирование файла
-                    // cp C:\source.txt D:\target.txt
+                    case "rm":              // удаление каталога рекурсивно
+                        if (commandParams.Length > 1 && Directory.Exists(commandParams[1]))
+                            if (commandParams.Length > 2)
+                            {
+                                RemoveDir(commandParams[1]);
+                            }
+                        break;
 
                     // Удаление каталога рекурсивно
                     // rm C:\Source
 
-                    // Удаление файла
-                    // rm C:\source.txt
-
                     // Вывод информации
                     // file C:\source.txt
+                    
                     case "help":
                         if (commandParams.Length == 1)
                             ShowHelp();
@@ -199,20 +209,66 @@ namespace Lesson9
                 string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
                 CopyDirectory(subDir.FullName, newDestinationDir);
             }
-            
         }
 
+        /// <summary>
+        /// Копирование файла в новый файл с заданным именем
+        /// </summary>
+        /// <param name="sourceFilePath">Путь до родительского файла</param>
+        /// <param name="destFilePath">Путь с указанием имени нового файла</param>
+        static void CopyFile(string sourceFilePath, string destFilePath)
+        {
+            if (File.Exists(sourceFilePath))
+            {
+                try
+                {
+                    File.Copy(sourceFilePath, destFilePath, true);
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+            }
+        }
+
+        static void RemoveDir(string sourceDir)
+        {
+
+        }
+
+        /// <summary>
+        /// Удаление файла
+        /// </summary>
+        /// <param name="sourceFilePath">Путь к файлу</param>
+        static void RemoveFile(string sourceFilePath)
+        {
+            if (File.Exists(sourceFilePath))
+            {
+                try
+                {
+                    File.Delete(sourceFilePath);
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+            }
+
+        }
+        
         /// <summary>
         /// Вывод всех доступных команд
         /// </summary>
         static void ShowHelp()
         {
             string[] help = { "Список команд:",
-                            "info - список всех команд",
+                            "help - список всех команд",
                             "cd %path% - смена текущего каталога на введенный %путь%",
                             "ls %path% -p N - вывод дерева каталогов по указаному %пути% с указанием номера страницы",
                             "cp %source_path% %targer_path% - копирование каталога",
-                            "cp %source_file_path% %target_file_path% - копирование файла",
+                            "cf %source_file_path% %target_file_path% - копирование файла",
                             "rm %path% - удаление каталога",
                             "rm %file_path% - удаление файла",
                             "file %file_path% - вывод инормации о файле" };
