@@ -157,10 +157,15 @@ namespace Lesson9
                                 RemoveDir(commandParams[1]);
                         break;
 
+                    case "file":              // вывод информации о файле
+                        if (commandParams.Length > 1 && commandParams.Length < 3)
+                            ShowFileInfo(commandParams[1]);
+                        break;
+
 
                     // Вывод информации
                     // file C:\source.txt
-                    
+
                     case "help":
                         if (commandParams.Length == 1)
                             ShowHelp();
@@ -168,6 +173,39 @@ namespace Lesson9
                 }
             }
             UpdateConsole();
+        }
+
+        /// <summary>
+        /// Вывод информации о файле
+        /// </summary>
+        /// <param name="filePath">Путь к файлу</param>
+        static void ShowFileInfo(string filePath)
+        {
+            DrawWindow(0, 26, WINDOW_WIDTH, 10);
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    FileInfo fileInfo = new FileInfo(filePath);
+                    string[] info = { $"Название файла: {fileInfo.Name.ToString()}",
+                            $"Расположение файла: {fileInfo.DirectoryName.ToString()}",
+                            $"Расширение: {fileInfo.Extension.ToString()}",
+                            $"Размер: {fileInfo.Length.ToString()} bytes",
+                            $"Создан: {fileInfo.CreationTime.ToString()}",
+                            $"Изменен: { fileInfo.LastWriteTime.ToString() }",
+                            };
+                    for (int i = 0; i < info.Length; i++)
+                    {
+                        Console.SetCursorPosition(1, 27 + i);
+                        Console.WriteLine(info[i]);
+                    }
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+            }
         }
 
         /// <summary>
