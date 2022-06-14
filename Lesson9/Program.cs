@@ -152,16 +152,11 @@ namespace Lesson9
                             RemoveFile(commandParams[1]);
                         break;
 
-                    case "rm":              // удаление каталога рекурсивно
-                        if (commandParams.Length > 1 && Directory.Exists(commandParams[1]))
-                            if (commandParams.Length > 2)
-                            {
+                    case "rm":              // удаление каталога
+                        if (commandParams.Length > 1 && commandParams.Length < 3)
                                 RemoveDir(commandParams[1]);
-                            }
                         break;
 
-                    // Удаление каталога рекурсивно
-                    // rm C:\Source
 
                     // Вывод информации
                     // file C:\source.txt
@@ -222,7 +217,7 @@ namespace Lesson9
             {
                 try
                 {
-                    File.Copy(sourceFilePath, destFilePath, true);
+                    File.Copy(sourceFilePath, destFilePath, true); // параметр true разрешает перезапись файла, если он уже существует
                 }
                 catch (IOException e)
                 {
@@ -232,8 +227,24 @@ namespace Lesson9
             }
         }
 
+        /// <summary>
+        /// Удаление каталога
+        /// </summary>
+        /// <param name="sourceDir">Путь к удаляемой папке</param>
         static void RemoveDir(string sourceDir)
         {
+            if (Directory.Exists(sourceDir))
+            {
+                try
+                {
+                    Directory.Delete(sourceDir, true); // параметр true означает, что подпапки и файлы будут так же удалены рекурсивно
+                }
+
+                catch (IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
 
         }
 
@@ -366,7 +377,6 @@ namespace Lesson9
             API.GetShortPathName(path, shortPathName, API.MAX_PATH);
             return shortPathName.ToString();
         }
-
 
         /// <summary>
         /// Обновление ввода с консоли
