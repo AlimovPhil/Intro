@@ -111,7 +111,7 @@ namespace Lesson9
             {
                 switch (commandParams[0])
                 {
-                    case "cd":
+                    case "cd":              //смена каталога и вывод дерева этого каталога
                         if (commandParams.Length > 1)
                             if (Directory.Exists(commandParams[1]))
                             {
@@ -121,7 +121,7 @@ namespace Lesson9
                             }
                         break;
 
-                    case "ls":
+                    case "ls":              //вывод дерева введеного каталога с указанием начальной страницы отображения
                         if (commandParams.Length > 1 && Directory.Exists(commandParams[1]))
                             if (commandParams.Length > 3 && commandParams[2] == "-p" && int.TryParse(commandParams[3], out int n))
                             {
@@ -131,6 +131,15 @@ namespace Lesson9
                             {
                                 DrawTree(new DirectoryInfo(commandParams[1]), 1);
                             }
+                        break;
+
+                    case "cp":
+                        if (commandParams.Length > 1 && Directory.Exists(commandParams[1]))
+                            if (commandParams.Length > 2) 
+                            {
+                               CopyDirectory(commandParams[1], commandParams[2]);
+                            }
+
                         break;
 
                     // Копирование каталога
@@ -148,11 +157,49 @@ namespace Lesson9
                     // Вывод информации
                     // file C:\source.txt
                     case "help":
-                        ShowHelp();
+                        if (commandParams.Length == 1)
+                            ShowHelp();
                         break;
                 }
             }
             UpdateConsole();
+        }
+
+        /// <summary>
+        /// Копирование всего каталога с вложенными папками и файлами
+        /// </summary>
+        /// <param name="sourceDir">Родительский каталог</param>
+        /// <param name="destinationDir">Каталог назначения</param>
+        /// <exception cref="DirectoryNotFoundException"></exception>
+        static void CopyDirectory(string sourceDir, string destinationDir)
+        {
+            // Собираем информацию о каталоге
+            var dir = new DirectoryInfo(sourceDir);
+
+            // Проверка на существование директории
+            if (!dir.Exists)
+                throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+
+            // Собираем инфу о подпапках
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            // Создаем конечную папку (если её не существует)
+            Directory.CreateDirectory(destinationDir);
+
+            // Копируем все вложенные файлы в ориджин папке
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                string targetFilePath = Path.Combine(destinationDir, file.Name);
+                file.CopyTo(targetFilePath);
+            }
+
+            // Рекурсивно проходим по вложенным папкам
+            foreach (DirectoryInfo subDir in dirs)
+            {
+                string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
+                CopyDirectory(subDir.FullName, newDestinationDir);
+            }
+            
         }
 
         /// <summary>
