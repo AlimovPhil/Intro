@@ -8,6 +8,7 @@ using Lesson9.Utils;
 
 namespace Lesson9
 {
+
     internal class Program
     {
         const int WINDOW_HEIGHT = 40; // Высота окна приложения;
@@ -88,11 +89,15 @@ namespace Lesson9
                     }
                 }
 
+                if (keyInfo.Key == ConsoleKey.UpArrow)
+                {
                 //TODO вывод введенных команд нажатием стрелочки вверх
+                }
+
             } 
             while (keyInfo.Key != ConsoleKey.Enter);
+            
             ParseCommandString(command.ToString());
-
         }
 
         /// <summary>
@@ -111,6 +116,7 @@ namespace Lesson9
                             if (Directory.Exists(commandParams[1]))
                             {
                                 currentDir = commandParams[1];
+                                DrawTree(new DirectoryInfo(commandParams[1]), 1);
                                 UpdateConsole();
                             }
                         break;
@@ -126,9 +132,48 @@ namespace Lesson9
                                 DrawTree(new DirectoryInfo(commandParams[1]), 1);
                             }
                         break;
+
+                    // Копирование каталога
+                    // cp C:\Source D:\Target
+
+                    // Копирование файла
+                    // cp C:\source.txt D:\target.txt
+
+                    // Удаление каталога рекурсивно
+                    // rm C:\Source
+
+                    // Удаление файла
+                    // rm C:\source.txt
+
+                    // Вывод информации
+                    // file C:\source.txt
+                    case "help":
+                        ShowHelp();
+                        break;
                 }
             }
             UpdateConsole();
+        }
+
+        /// <summary>
+        /// Вывод всех доступных команд
+        /// </summary>
+        static void ShowHelp()
+        {
+            string[] help = { "Список команд:",
+                            "info - список всех команд",
+                            "cd %path% - смена текущего каталога на введенный %путь%",
+                            "ls %path% -p N - вывод дерева каталогов по указаному %пути% с указанием номера страницы",
+                            "cp %source_path% %targer_path% - копирование каталога",
+                            "cp %source_file_path% %target_file_path% - копирование файла",
+                            "rm %path% - удаление каталога",
+                            "rm %file_path% - удаление файла",
+                            "file %file_path% - вывод инормации о файле" };
+            for (int i = 0; i < help.Length; i++)
+            {
+                Console.SetCursorPosition(1, 1+i);
+                Console.WriteLine(help[i]);
+            }
         }
 
         /// <summary>
