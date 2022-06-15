@@ -15,10 +15,10 @@ namespace Lesson9
         const int WINDOW_WIDTH = 120; // Ширина окна приложения
         private static string currentDir = Directory.GetCurrentDirectory();
 
-        //TODO.. Set const buffer zone
-
         static void Main(string[] args)
         {
+            currentDir = Properties.Settings.Default.LastPath; // Читаем директорию из конфига
+
             Console.Title = "File Manager"; // Название окна
 
             Console.BackgroundColor = ConsoleColor.Black; // Цвет окна
@@ -93,7 +93,7 @@ namespace Lesson9
 
                 if (keyInfo.Key == ConsoleKey.UpArrow)
                 {
-                //TODO вывод введенных команд нажатием стрелочки вверх
+                    //ToDo....
                 }
 
             } 
@@ -118,9 +118,11 @@ namespace Lesson9
                             if (Directory.Exists(commandParams[1]))
                             {
                                 currentDir = commandParams[1];
+                                Properties.Settings.Default.LastPath = currentDir;
                                 DrawTree(new DirectoryInfo(commandParams[1]), 1);
                                 ShowDirInfo(currentDir);
                                 UpdateConsole();
+                                Properties.Settings.Default.Save(); // при исполнении команды cd сохраняется путь каталога в файл конфиг
                             }
                         break;
 
@@ -129,10 +131,12 @@ namespace Lesson9
                             if (commandParams.Length > 3 && commandParams[2] == "-p" && int.TryParse(commandParams[3], out int n))
                             {
                                 DrawTree(new DirectoryInfo(commandParams[1]), n);
+                                ShowDirInfo(commandParams[1]);
                             }
                             else
                             {
                                 DrawTree(new DirectoryInfo(commandParams[1]), 1);
+                                ShowDirInfo(commandParams[1]);
                             }
                         break;
 
@@ -143,6 +147,7 @@ namespace Lesson9
                                CopyDirectory(commandParams[1], commandParams[2]);
                             }
                         break;
+
                     case "cf":              // копирование файла
                         if (commandParams.Length > 1)
                             if (commandParams.Length > 2 && commandParams.Length < 4)
@@ -150,6 +155,7 @@ namespace Lesson9
                                 CopyFile(commandParams[1], commandParams[2]);
                             }
                         break;
+
                     case "rf":              // удаление файла
                         if (commandParams.Length > 1 && commandParams.Length < 3)
                             RemoveFile(commandParams[1]);
@@ -173,6 +179,11 @@ namespace Lesson9
                     case "help":               // вывод доступных команд
                         if (commandParams.Length == 1)
                             ShowHelp();
+                        break;
+
+                    case "exit":            // закрытие приложения
+                        Properties.Settings.Default.Save();
+                        Environment.Exit(0);
                         break;
                 }
             }
@@ -377,7 +388,8 @@ namespace Lesson9
                             "cf %source_file_path% %target_file_path% - копирование файла",
                             "rm %path% - удаление каталога",
                             "rm %file_path% - удаление файла",
-                            "file %file_path% - вывод инормации о файле" };
+                            "file %file_path% - вывод инормации о файле",
+                            "exit  - выход из приложения"};
             for (int i = 0; i < help.Length; i++)
             {
                 Console.SetCursorPosition(1, 1+i);
