@@ -25,7 +25,7 @@ namespace Lesson9.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Windows\\Cursors")]
         public string LastPath {
             get {
                 return ((string)(this["LastPath"]));

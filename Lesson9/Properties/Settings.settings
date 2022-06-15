@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="LastPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Public</Value>
+      <Value Profile="(Default)">C:\Windows\Cursors</Value>
     </Setting>
   </Settings>
 </SettingsFile>

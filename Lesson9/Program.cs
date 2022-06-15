@@ -380,6 +380,7 @@ namespace Lesson9
         /// </summary>
         static void ShowHelp()
         {
+            DrawWindow(0, 0, WINDOW_WIDTH, 26);
             string[] help = { "Список команд:",
                             "help - список всех команд",
                             "cd %path% - смена текущего каталога на введенный %путь%",

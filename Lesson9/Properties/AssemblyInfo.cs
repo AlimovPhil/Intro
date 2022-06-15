@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Lesson9")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Simple Console app Task manager")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Lesson9")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyCompany("retrom ltd")]
+[assembly: AssemblyProduct("Task Maanger")]
+[assembly: AssemblyCopyright("Copyright © retrom, 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
